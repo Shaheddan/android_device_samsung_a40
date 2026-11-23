@@ -18,10 +18,19 @@
 <!-- These resources are around just to allow their values to be customized
      for different hardware and product builds.  Do not translate. -->
 <resources>
-    <!-- No always on display. The s6e8fc0 panel driver has no low power (ALPM) mode, so
-         in doze the panel just stays in normal mode, and AOD was reported not to work
-         right on this phone. Only the A30's ea8076 panel has one. -->
-    <bool name="config_dozeAlwaysOnDisplayAvailable">false</bool>
+    <!-- Always on display. The s6e8fc0 panel driver has no low power (ALPM) mode, so
+         while AOD shows the panel stays in normal mode and the phone can't go to sleep.
+         That costs battery, so AOD starts off and people switch it on in Settings. -->
+    <bool name="config_dozeAlwaysOnDisplayAvailable">true</bool>
+    <bool name="config_dozeAlwaysOnEnabled">false</bool>
+
+    <!-- AOD brightness. The float wins over config_screenBrightnessDoze when it isn't -2,
+         and its default 0.0 left the clock at the lowest backlight step, too dark to read
+         in daylight. SystemUI still keeps it at or below the screen's own brightness.
+         With auto brightness on, AOD follows the light sensor like the screen does. -->
+    <item name="config_screenBrightnessDozeFloat" format="float" type="dimen">0.3</item>
+    <integer name="config_screenBrightnessDoze">77</integer>
+    <bool name="config_allowAutoBrightnessWhileDozing">true</bool>
 
     <!-- If true, the display will be shifted around in ambient mode. -->
     <bool name="config_enableBurnInProtection">true</bool>
